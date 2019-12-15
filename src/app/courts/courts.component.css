@@ -1,0 +1,22 @@
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#courts{
+  background-image: url('../../assets/images/sand.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  mix-blend-mode: multiply;
+}
+
+.active {
+  color: white !important;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  color: white;
+}
+
+.carousel-item > img {
+  width: 100%;
+}

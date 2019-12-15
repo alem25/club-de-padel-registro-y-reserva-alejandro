@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'proceso-de-registro-y-reserva-alejandro'`, () => {
+  it(`should have as title 'club-de-padel-registro-y-reserva-alejandro'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('proceso-de-registro-y-reserva-alejandro');
+    expect(app.title).toEqual('club-de-padel-registro-y-reserva-alejandro');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('proceso-de-registro-y-reserva-alejandro app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('club-de-padel-registro-y-reserva-alejandro app is running!');
   });
 });

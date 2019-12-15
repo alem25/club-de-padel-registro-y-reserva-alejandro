@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'proceso-de-registro-y-reserva-alejandro';
+  title = 'club-de-padel-registro-y-reserva-alejandro';
 }

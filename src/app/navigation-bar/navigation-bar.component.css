@@ -1,0 +1,25 @@
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.leftnav {
+  padding: 0 1vw;
+  color: rgb(252, 241, 231);
+}
+
+.rightnav {
+  padding: 0 1vw;
+  color: rgb(255, 255, 255);
+}
+
+.active {
+  color: white !important;
+}
+
+#book{
+  display: none;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  color: white;
+}

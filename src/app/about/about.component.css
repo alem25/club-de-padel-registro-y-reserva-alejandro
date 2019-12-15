@@ -1,0 +1,19 @@
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#about {
+  background-image: url('../../assets/images/blackcourt.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  mix-blend-mode: multiply;
+  height: 600px;
+}
+
+#about_info {
+  margin-top: 5vw;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  color: white;
+}

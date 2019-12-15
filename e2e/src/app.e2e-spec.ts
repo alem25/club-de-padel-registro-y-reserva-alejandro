@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('proceso-de-registro-y-reserva-alejandro app is running!');
+    expect(page.getTitleText()).toEqual('club-de-padel-registro-y-reserva-alejandro app is running!');
   });
 
   afterEach(async () => {

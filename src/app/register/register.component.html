@@ -1,0 +1,50 @@
+<section id="register">
+  <div class="container p-5">
+    <form class="rounded-lg p-5 bg-dark" name="login">
+      <div class="form-group">
+        <label class="text-light ">REGISTRO</label>
+      </div>
+      <div class="row m-auto">
+        <div class="col-6">
+          <div class="form-group">
+            <label class="text-light col-10 pl-0" for="nombre">Usuario:</label>
+            <input class="form-control col-10" id="nombre" placeholder="Nombre de usuario" required type="text">
+          </div>
+          <div class="form-group">
+            <label class="text-light col-10 pl-0" for="email1">Correo electrónico:</label>
+            <input class="form-control col-10" id="email1" placeholder="Correo electrónico" required type="email">
+          </div>
+          <div class="form-group">
+            <label class="text-light col-10 pl-0" for="contraseña1">Contraseña:</label>
+            <input class="form-control col-10" id="contraseña1" placeholder="Contraseña" required type="password">
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label class="text-light col-10 pl-0" for="apellidos">Teléfono:</label>
+            <input class="form-control col-10" id="apellidos" placeholder="Teléfono móvil (opcional)" type="tel">
+          </div>
+          <div class="form-group">
+            <label class="text-light col-10 pl-0" for="fecha">Fecha de nacimiento:</label>
+            <input class="form-control col-10" id="fecha" type="date">
+          </div>
+          <div class="form-group">
+            <label class="text-light col-10 pl-0" for="contraseña2">Repetir contraseña:</label>
+            <input class="form-control col-10" id="contraseña2" required placeholder="Repetir contraseña"
+                   type="password" name="contraseña2" (blur)="CompruebaPass()">
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-6 text-center">
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="recordar">
+            <label class="form-check-label text-light" for="recordar">He leído y acepto los términos y
+              condiciones</label>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

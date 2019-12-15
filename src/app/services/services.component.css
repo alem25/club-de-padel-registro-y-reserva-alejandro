@@ -1,0 +1,14 @@
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#services {
+  background-image: url('../../assets/images/grasscourt.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  mix-blend-mode: multiply;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  color: white;
+}
