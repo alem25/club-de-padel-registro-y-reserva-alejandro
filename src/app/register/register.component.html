@@ -1,6 +1,6 @@
 <section id="register">
   <div class="container p-5">
-    <form class="rounded-lg p-5 bg-dark" name="login">
+    <form class="rounded-lg p-5 bg-dark" name="login" #register_form='ngForm'>
       <div class="form-group">
         <label class="text-light ">REGISTRO</label>
       </div>
@@ -8,41 +8,68 @@
         <div class="col-6">
           <div class="form-group">
             <label class="text-light col-10 pl-0" for="nombre">Usuario:</label>
-            <input class="form-control col-10" id="nombre" placeholder="Nombre de usuario" required type="text">
+            <input class="form-control col-10" id="nombre" name="nombre" placeholder="Nombre de usuario" type="text"
+                   required ngModel #nombre='ngModel' minlength='3' >
+            <div class="my-1 py-1 alert-danger col-10" *ngIf="nombre.touched && !nombre.valid">
+              <div *ngIf="nombre.errors.required">Nombre requerido</div>
+              <div *ngIf="nombre.errors.minlength">Longitud debe ser mayor a {{ nombre.errors.minlength.requiredLength }} caracteres</div>
+            </div>
           </div>
           <div class="form-group">
             <label class="text-light col-10 pl-0" for="email1">Correo electrónico:</label>
-            <input class="form-control col-10" id="email1" placeholder="Correo electrónico" required type="email">
+            <input class="form-control col-10" id="email1" name="email1" placeholder="Correo electrónico" type="email"
+                   ngModel #email1='ngModel' required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+            <div class="my-1 py-1 alert-danger col-10" *ngIf="email1.touched && !email1.valid">
+              <div *ngIf="email1.errors.required">Email requerido</div>
+              <div *ngIf="email1.errors.pattern">Se requiere de un formato de email válido</div>
+            </div>
           </div>
           <div class="form-group">
-            <label class="text-light col-10 pl-0" for="contraseña1">Contraseña:</label>
-            <input class="form-control col-10" id="contraseña1" placeholder="Contraseña" required type="password">
+            <label class="text-light col-10 pl-0" for="clave1">Contraseña:</label>
+            <input class="form-control col-10" id="clave1" name="clave1" placeholder="Contraseña" type="password"
+                   ngModel #clave1='ngModel' required minlength="4">
+            <div class="my-1 py-1 alert-danger col-10" *ngIf='clave1.touched && !clave1.valid'>
+              <div *ngIf="clave1.errors.required">Contraseña requerida</div>
+              <div *ngIf="clave1.errors.minlength">La longitud debe ser mayor a {{ clave1.errors.minlength.requiredLength }} caracteres</div>
+            </div>
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
-            <label class="text-light col-10 pl-0" for="apellidos">Teléfono:</label>
-            <input class="form-control col-10" id="apellidos" placeholder="Teléfono móvil (opcional)" type="tel">
+            <label class="text-light col-10 pl-0" for="phone">Teléfono:</label>
+            <input class="form-control col-10" id="phone" name="phone" placeholder="Teléfono móvil (opcional)" type="tel"
+                   ngModel #phone='ngModel' pattern="\d{9}">
+            <div class="my-1 py-1 alert-danger col-10" *ngIf='phone.touched && !phone.valid'>
+              <div *ngIf="phone.errors.pattern">El número de teléfono debe contener 9 dígitos</div>
+            </div>
           </div>
           <div class="form-group">
             <label class="text-light col-10 pl-0" for="fecha">Fecha de nacimiento:</label>
             <input class="form-control col-10" id="fecha" type="date">
           </div>
           <div class="form-group">
-            <label class="text-light col-10 pl-0" for="contraseña2">Repetir contraseña:</label>
-            <input class="form-control col-10" id="contraseña2" required placeholder="Repetir contraseña"
-                   type="password" name="contraseña2" (blur)="CompruebaPass()">
+            <label class="text-light col-10 pl-0" for="clave2">Repetir contraseña:</label>
+            <input class="form-control col-10" id="clave2" name="clave2"  placeholder="Repetir contraseña" type="password"
+                   ngModel #clave2='ngModel' required pattern="{{ clave1.value }}">
+            <div class="my-1 py-1 alert-danger col-10" *ngIf='clave2.touched && !clave2.valid'>
+              <div *ngIf="clave2.errors.required">Este campo es requerido</div>
+              <div *ngIf="clave2.errors.pattern">Las contraseñas deben coincidir</div>
+            </div>
           </div>
         </div>
       </div>
       <div class="row justify-content-center">
         <div class="col-6 text-center">
           <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="recordar">
+            <input class="form-check-input" name="recordar" id="recordar" type="checkbox"
+                   ngModel #recordar='ngModel' required>
             <label class="form-check-label text-light" for="recordar">He leído y acepto los términos y
               condiciones</label>
+            <div class="my-1 py-1 alert-danger" *ngIf='recordar.touched && recordar.invalid'>
+              Debes aceptar los términos y condiciones
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary">Enviar</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!register_form.valid">Enviar</button>
         </div>
       </div>
     </form>

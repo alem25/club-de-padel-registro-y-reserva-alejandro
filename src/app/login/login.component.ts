@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  public peticion = new XMLHttpRequest();
+  peticion = new XMLHttpRequest();
 
   Login(user, password) {
     const url = 'http://fenw.etsisi.upm.es:10000/users/login?username=' + user + '&password=' + password;
@@ -16,18 +16,12 @@ export class LoginComponent implements OnInit {
     this.peticion.send(null);
   }
 
-  Comprueba() {
-    const user = document.getElementById('user_id');
-    const passw = document.getElementById('password_id');
-    this.Login(user, passw);
-  }
-
   TrataRespuesta() {
     let response;
-    if (this.peticion.status === 200) {
+    if (this.peticion !== null && this.peticion !== undefined && this.peticion.status && this.peticion.status === 200) {
       response = this.peticion.getResponseHeader('authorization');
       window.localStorage.setItem('token_key', response.replace('Bearer ', ''));
-      document.getElementById('home_page').click();
+      document.getElementById('startlink').click();
     } else {
       alert('Usuario o contraseña incorrecta');
       location.reload();

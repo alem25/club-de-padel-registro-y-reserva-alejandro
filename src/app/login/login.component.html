@@ -1,24 +1,34 @@
 <section id="login">
   <div id="login_box" class="row justify-content-center p-5">
-    <form class="rounded-lg m-sm-4 p-sm-4 ml-sm-5 bg-dark col-xs-6 col-sm-6 col-md-6 col-lg-3" name="login">
-      <div class="container px-3 mx-3">
+    <form class="rounded-lg m-xs-4 p-xs-4 ml-xs-5 bg-dark col-xs-6 col-lg-3" name="login" #login_form='ngForm'>
+      <div class="container p-3 m-3">
         <div class="form-group row">
           <label class="text-light" id="auth">INICIAR SESIÓN</label>
         </div>
         <div class="form-group row">
           <label class="text-light col-10 pl-0" for="user_id">Nombre de usuario:</label>
-          <input class="form-control col-10" id="user_id" required placeholder="Usuario" type="text">
+          <input class="form-control col-10" id="user_id" placeholder="Usuario" type="text"
+                 required minlength="4" ngModel name="user_id" #user_id='ngModel'>
+          <div class="my-1 py-1 alert alert-danger col-10" *ngIf="user_id.touched && !user_id.valid">
+            <div *ngIf="user_id.errors.required">Nombre de usuario requerido</div>
+            <div *ngIf="user_id.errors.minlength">La longitud debe ser mayor a {{ user_id.errors.minlength.requiredLength }} caracteres</div>
+          </div>
         </div>
         <div class="form-group row">
           <label class="text-light col-10 pl-0" for="password_id">Contraseña:</label>
-          <input class="form-control col-10" id="password_id" required placeholder="Contraseña" type="password">
+          <input class="form-control col-10" id="password_id" placeholder="Contraseña"
+                 type="password" required minlength="4" ngModel name="password_id" #password_id='ngModel'>
+          <div class="my-1 py-1 alert alert-danger col-10" *ngIf="password_id.touched && !password_id.valid">
+            <div *ngIf="password_id.errors.required">Contraseña requerida</div>
+            <div *ngIf="password_id.errors.minlength">La longitud debe ser mayor a {{ password_id.errors.minlength.requiredLength }} caracteres</div>
+          </div>
         </div>
         <div class="form-group row form-check">
           <input type="checkbox" class="form-check-input" id="recordar">
           <label class="form-check-label text-light" for="recordar">Recordarme</label>
         </div>
         <div class="form-group row pl-0">
-          <button type="button" onclick="Comprueba()" class="btn btn-primary">Acceder</button>
+          <button type="submit" [disabled]="!login_form.valid" (click)="Login(user_id.value, password_id.value)" class="btn btn-primary">Acceder</button>
         </div>
       </div>
     </form>
