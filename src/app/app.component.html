@@ -1,5 +1,7 @@
 <section>
-  <app-navigation-bar></app-navigation-bar>
+  <app-navigation-bar *ngIf="!isAuthorized()"></app-navigation-bar>
+  <app-nav-bar-logged *ngIf="isAuthorized()"></app-nav-bar-logged>
   <router-outlet></router-outlet>
   <app-footer></app-footer>
+  <app-cookies></app-cookies>
 </section>

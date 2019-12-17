@@ -9,9 +9,8 @@ import { CourtsComponent } from './courts/courts.component';
 import { ServicesComponent } from './services/services.component';
 import { LocationComponent } from './location/location.component';
 import { AboutComponent } from './about/about.component';
-import { FooterComponent } from './footer/footer.component';
-import { CookiesComponent } from './cookies/cookies.component';
-import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import {NavigationBarComponent} from './navigation-bar/navigation-bar.component';
+import {NavBarLoggedComponent} from './nav-bar-logged/nav-bar-logged.component';
 
 const routes: Routes = [
   { path: 'start', component: StartComponent },
@@ -22,10 +21,8 @@ const routes: Routes = [
   { path: 'services', component: ServicesComponent },
   { path: 'location', component: LocationComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'footer', component: FooterComponent },
-  { path: 'cookies', component: CookiesComponent },
-  { path: 'navigation', component: NavigationBarComponent },
-  { path: 'navigation', component: NavigationBarComponent },
+  { path: 'nav-bar', component: NavigationBarComponent },
+  { path: 'nav-bar-logged', component: NavBarLoggedComponent },
   { path: '', redirectTo: 'start', pathMatch: 'full'}
 ];
 

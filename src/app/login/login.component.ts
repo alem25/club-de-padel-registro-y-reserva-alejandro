@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -7,28 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  peticion = new XMLHttpRequest();
+  public jwt;
+
+  constructor(private http: HttpClient) { }
 
   Login(user, password) {
     const url = 'http://fenw.etsisi.upm.es:10000/users/login?username=' + user + '&password=' + password;
-    this.peticion.open('GET', url, true);
-    this.peticion.onload = this.TrataRespuesta;
-    this.peticion.send(null);
+    return this.http.get( url, {observe: 'response'}).subscribe(
+      response => {
+        this.jwt = response.headers.get('Authorization');
+        window.localStorage.setItem('token_key', this.jwt.replace('Bearer ', ''));
+        document.getElementById('startlink').click();
+      }, error => {
+        alert('Usuario o contraseña incorrecta ' + error.toString());
+        location.reload();
+      }, () => {
+      }
+    );
   }
-
-  TrataRespuesta() {
-    let response;
-    if (this.peticion !== null && this.peticion !== undefined && this.peticion.status && this.peticion.status === 200) {
-      response = this.peticion.getResponseHeader('authorization');
-      window.localStorage.setItem('token_key', response.replace('Bearer ', ''));
-      document.getElementById('startlink').click();
-    } else {
-      alert('Usuario o contraseña incorrecta');
-      location.reload();
-    }
-  }
-
-  constructor() { }
 
   ngOnInit() {
   }

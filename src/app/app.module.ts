@@ -16,6 +16,7 @@ import { BookComponent } from './book/book.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { StartComponent } from './start/start.component';
+import { NavBarLoggedComponent } from './nav-bar-logged/nav-bar-logged.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { StartComponent } from './start/start.component';
     BookComponent,
     LoginComponent,
     RegisterComponent,
-    StartComponent
+    StartComponent,
+    NavBarLoggedComponent
   ],
   imports: [
     BrowserModule,
