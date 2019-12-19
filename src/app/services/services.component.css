@@ -3,7 +3,7 @@ html {
 }
 
 #services {
-  background-image: url('../../assets/images/grasscourt.jpg');
+  background-image: url('../../assets/images/leaves.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   mix-blend-mode: multiply;
@@ -11,4 +11,5 @@ html {
 
 p, h1, h2, h3, h4, h5, h6 {
   color: white;
+  text-shadow: 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
 }
