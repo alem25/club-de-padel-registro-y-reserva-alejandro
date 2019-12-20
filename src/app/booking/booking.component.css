@@ -1,0 +1,6 @@
+#booking {
+  background-image: url('../../assets/images/balls.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  mix-blend-mode: multiply;
+}

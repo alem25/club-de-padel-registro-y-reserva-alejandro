@@ -3,9 +3,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AppRoutingModule } from './app-routing.module';
+import { MatButtonModule } from '@angular/material';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CourtsComponent } from './courts/courts.component';
 import { ServicesComponent } from './services/services.component';
@@ -19,10 +22,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { StartComponent } from './start/start.component';
 import { NavBarLoggedComponent } from './nav-bar-logged/nav-bar-logged.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogComponent } from './dialog/dialog.component';
-import {MatButtonModule} from '@angular/material';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { BookingComponent } from './booking/booking.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     StartComponent,
     NavBarLoggedComponent,
     DialogComponent,
+    BookingComponent,
   ],
   imports: [
     BrowserModule,

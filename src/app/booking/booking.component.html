@@ -1,0 +1,28 @@
+<section id="booking">
+  <div class="row justify-content-center p-5">
+    <div class="container bg-dark rounded-lg">
+      <div class="m-5 p-5">
+        <h2 class="text-light">NUEVA RESERVA</h2>
+        <label class="text-light d-block" for="date">Selecciona el día de la reserva</label>
+        <input class="form-control d-block my-3" id="date" name="date" type="date" [(ngModel)]="date" (change)="getAvailableByDay()" ngModel>
+        <table *ngIf="date !== undefined && date !== null && date !== ''" class="table table-secondary">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Pista disponible</th>
+            <th scope="col">Hora de la reserva:</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let available of availables; index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{available?.courtId}}</td>
+            <td>{{available?.rsvtime}}</td>
+            <td><button class="btn btn-info">Reservar</button></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

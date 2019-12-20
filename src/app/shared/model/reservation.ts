@@ -1,19 +1,15 @@
 export class Reservation {
-  rsvId: number;
-  courtId: number;
-  rsvdateTime: number;
-  rsvday: string;
-  rsvtime: string;
+  rsvId: number | undefined;
+  courtId: number | undefined;
+  rsvdateTime: number | undefined;
+  rsvday: string | undefined;
+  rsvtime: string | undefined;
 
-  constructor(response: any) {
-    this.rsvId = response.rsvId;
-    this.courtId = response.courtId;
-    this.rsvdateTime = response.rsvdateTime;
-    this.rsvday = response.rsvday;
-    this.rsvtime = response.rsvtime;
+  constructor(response?: any) {
+    this.rsvId = response ? response.rsvId : undefined;
+    this.courtId = response ? response.courtId : undefined;
+    this.rsvdateTime = response ? response.rsvdateTime : undefined;
+    this.rsvday = response ? response.rsvday : undefined;
+    this.rsvtime = response ? response.rsvtime : undefined;
   }
-}
-
-export class ReservationArray {
-  reservations: Reservation[];
 }

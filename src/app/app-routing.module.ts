@@ -9,8 +9,9 @@ import { CourtsComponent } from './courts/courts.component';
 import { ServicesComponent } from './services/services.component';
 import { LocationComponent } from './location/location.component';
 import { AboutComponent } from './about/about.component';
-import {NavigationBarComponent} from './navigation-bar/navigation-bar.component';
-import {NavBarLoggedComponent} from './nav-bar-logged/nav-bar-logged.component';
+import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+import { NavBarLoggedComponent } from './nav-bar-logged/nav-bar-logged.component';
+import { BookingComponent } from './booking/booking.component';
 
 const routes: Routes = [
   { path: 'start', component: StartComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'nav-bar', component: NavigationBarComponent },
   { path: 'nav-bar-logged', component: NavBarLoggedComponent },
+  { path: 'booking', component: BookingComponent },
   { path: '', redirectTo: 'start', pathMatch: 'full'}
 ];
 
