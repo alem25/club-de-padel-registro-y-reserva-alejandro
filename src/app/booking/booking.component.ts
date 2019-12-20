@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Reservation } from '../shared/model/reservation';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import { Time } from '../shared/model/time';
+import {DialogComponent} from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-booking',
@@ -15,8 +16,10 @@ export class BookingComponent implements OnInit {
   date: string | undefined;
   reservations: Reservation[] = [];
   availables: Reservation[] = [];
+  bookcourtid: string;
+  bookrsvtime: string;
 
-  constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar) { }
+  constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar, private dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -94,31 +97,61 @@ export class BookingComponent implements OnInit {
     }
   }
 
+  book(time: string, court: string) {
+    this.bookrsvtime = time;
+    this.bookcourtid = court;
+    this.openDialog();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, { data: ''
+    });
+    dialogRef.componentInstance.action = 'reservar esta plaza';
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.postReservation();
+      }
+    });
+  }
+
   postReservation() {
     if (this.date !== undefined && this.date !== null && this.date !== '') {
-      const date = this.date !== undefined ? new Date(this.date).getTime() : undefined;
-      const url = 'http://fenw.etsisi.upm.es:10000/reservations/' + date;
+      let stringDate = this.date ? this.date.split(' ')[0] : undefined;
+      stringDate = stringDate + ' ' + this.bookrsvtime;
+      const date: number | undefined = stringDate ? new Date(stringDate).getTime() : undefined;
+      const url = 'http://fenw.etsisi.upm.es:10000/reservations';
       const tokenKey = localStorage.getItem('token_key');
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + tokenKey);
-      return this.http.get(url, { headers, observe: 'response', responseType: 'json'}).toPromise().then(
+      return this.http.post(url, { courtid: +this.bookcourtid, rsvdatetime: date }, { headers, observe: 'response', responseType: 'json'})
+        .toPromise().then(
         (response: any) => {
           switch (response.status) {
-            case 200:
+            case 201:
               const jwt = response.headers.get('Authorization');
               localStorage.setItem('token_key', jwt.replace('Bearer ', ''));
-              this.reservations = response.body;
+              this.snackbar.open('¡Plaza reservada!', 'Aceptar',
+                { duration: 5000, verticalPosition: 'top' });
+              this.router.navigate(['/book']);
               break;
             default:
               break;
           }
         }).catch( (error) => {
         switch (error.status) {
+          case 400:
+            this.snackbar.open('La pista o la fecha de la reserva no son válidas', 'Aceptar',
+              { duration: 5000, verticalPosition: 'top' });
+            break;
           case 401:
             this.snackbar.open('No estás autorizado para hacer esta solicitud', 'Aceptar',
               { duration: 5000, verticalPosition: 'top' });
             this.router.navigate(['/start']);
+            break;
+          case 409:
+            this.snackbar.open('Haz alcanzado el límite máximo de reservas', 'Aceptar',
+              { duration: 5000, verticalPosition: 'top' });
             break;
           case 500:
             this.snackbar.open('Error interno. Por favor, inténtalo de nuevo más tarde', 'Aceptar',

@@ -18,7 +18,7 @@
             <td>{{ i + 1 }}</td>
             <td>{{available?.courtId}}</td>
             <td>{{available?.rsvtime}}</td>
-            <td><button class="btn btn-info">Reservar</button></td>
+            <td><button (click)="book(available?.rsvtime, available?.courtId.toString())" class="btn btn-info">Reservar</button></td>
           </tr>
           </tbody>
         </table>

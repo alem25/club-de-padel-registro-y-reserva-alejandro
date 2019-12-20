@@ -61,6 +61,7 @@ export class NavBarLoggedComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
     });
+    dialogRef.componentInstance.action = 'eliminar tu cuenta de usuario';
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.deleteAccount();
