@@ -16,6 +16,10 @@ html {
   color: white !important;
 }
 
+.dropdown-item.text-light {
+  background-color: #6c757d;
+}
+
 #book{
   display: none;
 }

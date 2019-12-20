@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +20,8 @@ import { RegisterComponent } from './register/register.component';
 import { StartComponent } from './start/start.component';
 import { NavBarLoggedComponent } from './nav-bar-logged/nav-bar-logged.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogComponent } from './dialog/dialog.component';
+import {MatButtonModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     RegisterComponent,
     StartComponent,
     NavBarLoggedComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,12 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     AppRoutingModule,
     MatSnackBarModule,
-    NoopAnimationsModule
+    MatDialogModule,
+    NoopAnimationsModule,
+    MatButtonModule
+  ],
+  entryComponents: [
+    DialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -12,8 +12,19 @@
       <li class="nav-item leftnav"><a class="nav-link" routerLink="about">SOBRE NOSOTROS</a></li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item rightnav"><a class="nav-link" routerLink="book">RESERVAR</a>
-      <li class="nav-item rightnav"><a class="nav-link" routerLink="/" (click)='logout()'>DESCONECTAR</a></li>
+      <li class="nav-item rightnav">
+      <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false" ngModel [textContent]="usernameLogged">
+          </button>
+          <div class="dropdown-menu dropdown-menu-right bg-secondary" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item text-light" routerLink="book">RESERVAR</a>
+            <a class="dropdown-item text-light" routerLink="/" (click)='logout()'>DESCONECTAR</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-light" routerLink="/" (click)='openDialog()'>ELIMINAR USUARIO</a>
+          </div>
+        </div>
+      </li>
     </ul>
   </div>
 </nav>
