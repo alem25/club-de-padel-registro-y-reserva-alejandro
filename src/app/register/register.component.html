@@ -5,7 +5,7 @@
         <label class="text-light ">REGISTRO</label>
       </div>
       <div class="row m-auto">
-        <div class="col-6">
+        <div class="col-lg-6">
           <div class="form-group">
             <label class="text-light col-10 pl-0" for="nombre">Usuario:</label>
             <input class="form-control col-10" id="nombre" name="nombre" placeholder="Nombre de usuario" type="text"
@@ -14,6 +14,8 @@
               <div *ngIf="nombreval.errors.required">Nombre requerido</div>
               <div *ngIf="nombreval.errors.minlength">Longitud debe ser mayor o igual a {{ nombreval.errors.minlength.requiredLength }} caracteres</div>
             </div>
+            <div class="my-1 py-1 alert-danger col-10" *ngIf="nombreval.touched && alreadyExists === true && nombreval.valid">Usuario no válido</div>
+            <div class="my-1 py-1 alert-success col-10" *ngIf="nombreval.touched && alreadyExists === false && nombreval.valid">¡Usuario disponible!</div>
           </div>
           <div class="form-group">
             <label class="text-light col-10 pl-0" for="email1">Correo electrónico:</label>
@@ -34,7 +36,7 @@
             </div>
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-lg-6">
           <div class="form-group">
             <label class="text-light col-10 pl-0" for="phone">Teléfono:</label>
             <input class="form-control col-10" id="phone" name="phone" placeholder="Teléfono móvil (opcional)" type="tel"
@@ -60,7 +62,7 @@
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-6 text-center">
+        <div class="col-lg-6 text-center">
           <div class="form-group form-check">
             <input class="form-check-input" name="recordar" id="recordar" type="checkbox"
                    ngModel #recordar='ngModel' required>

@@ -22,6 +22,7 @@ import { NavBarLoggedComponent } from './nav-bar-logged/nav-bar-logged.component
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogComponent } from './dialog/dialog.component';
 import {MatButtonModule} from '@angular/material';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {MatButtonModule} from '@angular/material';
     MatSnackBarModule,
     MatDialogModule,
     NoopAnimationsModule,
-    MatButtonModule
+    MatButtonModule,
+    DragDropModule
   ],
   entryComponents: [
     DialogComponent

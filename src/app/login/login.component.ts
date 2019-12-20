@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     return this.http.get( url, {observe: 'response'}).subscribe(
       response => {
         this.jwt = response.headers.get('Authorization');
-        window.localStorage.setItem('token_key', this.jwt.replace('Bearer ', ''));
+        localStorage.setItem('token_key', this.jwt.replace('Bearer ', ''));
         this.router.navigate(['/']);
       }, () => {
             this.snackBar.open('Usuario o contraseña incorrecta', 'Aceptar', { duration: 5000, verticalPosition: 'top' });

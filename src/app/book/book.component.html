@@ -2,10 +2,25 @@
   <div id="login_box" class="row justify-content-center p-5">
   <div class="container bg-dark rounded-lg">
     <div class="m-5 p-5">
-      <h2 class="text-light">RESERVAS</h2>
-      <div>
-        <p class="text-md text-light">Las reservas no están disponibles en este momento.</p>
-      </div>
+      <h2 class="text-light">TUS RESERVAS</h2>
+          <table class="table table-secondary">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Id de la reserva</th>
+                <th scope="col">Pista reservada</th>
+                <th scope="col">Fecha de la reserva:</th>
+              </tr>
+            </thead>
+            <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+              <tr *ngFor="let reservation of reservations; index as i" cdkDrag>
+                <td>{{ i + 1 }}</td>
+                <td>{{reservation?.rsvId}}</td>
+                <td>{{reservation?.courtId}}</td>
+                <td>{{reservation?.rsvdateTime | date:'dd-MM-yyyy HH:mm:ss'}}</td>
+              </tr>
+            </tbody>
+          </table>
     </div>
   </div>
   </div>

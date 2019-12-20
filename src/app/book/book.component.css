@@ -9,10 +9,31 @@ html {
   mix-blend-mode: multiply;
 }
 
-.p1 {
+p, h1, h2, h3, h4, h5, h6 {
   color: white;
 }
 
-h1, h2, h3, h4, h5, h6 {
+.listadoDeReservas {
+  width: 500px;
+  max-width: 100%;
+  border: solid 1px #6c757d;
+  min-height: 60px;
+  display: block;
+  background: #6c757d;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.reserva {
+  padding: 20px 10px;
+  border-bottom: solid 1px #6c757d;
   color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: #6c757d;
+  font-size: 14px;
 }
