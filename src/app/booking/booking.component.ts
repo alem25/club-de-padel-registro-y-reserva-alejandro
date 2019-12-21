@@ -13,6 +13,8 @@ import {DialogComponent} from '../dialog/dialog.component';
 })
 export class BookingComponent implements OnInit {
 
+  min: Date;
+  max: Date;
   date: string | undefined;
   reservations: Reservation[] = [];
   availables: Reservation[] = [];
@@ -22,6 +24,9 @@ export class BookingComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar, private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.min = new Date();
+    this.max = new Date();
+    this.max.setFullYear(this.max.getFullYear() + 1);
   }
 
   getAvailableByDay() {
@@ -124,7 +129,11 @@ export class BookingComponent implements OnInit {
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + tokenKey);
-      return this.http.post(url, { courtid: +this.bookcourtid, rsvdatetime: date }, { headers, observe: 'response', responseType: 'json'})
+      const body = {
+        courtid: +this.bookcourtid,
+        rsvdatetime: +date,
+      };
+      return this.http.post(url, body, { headers, observe: 'response' })
         .toPromise().then(
         (response: any) => {
           switch (response.status) {
