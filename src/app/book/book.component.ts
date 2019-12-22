@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Reservation } from '../shared/model/reservation';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TokenService } from '../shared/services/token.service';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-book',
@@ -15,7 +16,8 @@ export class BookComponent implements OnInit {
 
   reservations: Reservation[] = [];
 
-  constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar, private token: TokenService) { }
+  constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar,
+              private token: TokenService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.token.guardian();
@@ -33,7 +35,7 @@ export class BookComponent implements OnInit {
         switch (response.status) {
           case 200:
             const jwt = response.headers.get('Authorization');
-            localStorage.setItem('token_key', jwt.replace('Bearer ', ''));
+            this.token.storeToken(jwt);
             this.reservations = response.body;
             break;
           default:
@@ -61,9 +63,9 @@ export class BookComponent implements OnInit {
     moveItemInArray(this.reservations, event.previousIndex, event.currentIndex);
   }
 
-  cancelReservation() {
-    const url = 'http://fenw.etsisi.upm.es:10000/reservations/' + this.id;
-    const tokenKey = localStorage.getItem('token_key');
+  cancelReservation(rsvId: number) {
+    const url = 'http://fenw.etsisi.upm.es:10000/reservations/' + rsvId;
+    const tokenKey = this.token.getToken();
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', 'Bearer ' + tokenKey);
@@ -71,8 +73,9 @@ export class BookComponent implements OnInit {
       response => {
         switch (response.status) {
           case 204:
-            this.snackBar.open('Usuario eliminado correctamente', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
-            this.logout();
+            this.snackbar.open('Reserva eliminada correctamente', 'Cerrar',
+              { duration: 5000, verticalPosition: 'top', panelClass: ['success-snackbar'] });
+            this.ngOnInit();
             break;
           default:
             break;
@@ -80,13 +83,30 @@ export class BookComponent implements OnInit {
       }).catch( (error) => {
       switch (error.status) {
         case 401:
-          this.snackBar.open('No estás autorizado para eliminar este usuario', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
+          this.snackbar.open('No estás autorizado para eliminar esta reserva', 'Cerrar',
+            { duration: 5000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
+          break;
+        case 404:
+          this.snackbar.open('No hemos podido localizar la reserva seleccionada', 'Cerrar',
+            { duration: 5000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
           break;
         case 500:
-          this.snackBar.open('Error interno', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
+          this.snackbar.open('Error interno', 'Cerrar',
+            { duration: 5000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
           break;
         default:
           break;
+      }
+    });
+  }
+
+  openDialog(id: number): void {
+    const dialogRef = this.dialog.open(DialogComponent, { data: ''
+    });
+    dialogRef.componentInstance.action = 'eliminar esta reserva';
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.cancelReservation(id);
       }
     });
   }

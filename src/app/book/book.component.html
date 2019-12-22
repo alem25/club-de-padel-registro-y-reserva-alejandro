@@ -19,7 +19,7 @@
                 <td>{{reservation?.rsvId}}</td>
                 <td>{{reservation?.courtId}}</td>
                 <td>{{reservation?.rsvdateTime | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-                <td><button (click)="cancelReservation()" class="btn btn-danger">Cancelar</button></td>
+                <td><button (click)="openDialog(reservation?.rsvId)" class="btn btn-danger">Cancelar</button></td>
               </tr>
             </tbody>
           </table>

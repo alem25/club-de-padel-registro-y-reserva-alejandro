@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material';
+import { TokenService } from '../shared/services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -12,17 +13,19 @@ export class LoginComponent implements OnInit {
 
   public jwt;
 
-  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar,
+              private token: TokenService) { }
 
   Login(user, password) {
     const url = 'http://fenw.etsisi.upm.es:10000/users/login?username=' + user + '&password=' + password;
     return this.http.get( url, {observe: 'response'}).subscribe(
       response => {
         this.jwt = response.headers.get('Authorization');
-        localStorage.setItem('token_key', this.jwt.replace('Bearer ', ''));
-        this.router.navigate(['/']);
+        this.token.storeToken(this.jwt);
+        this.router.navigate(['/start']);
       }, () => {
-            this.snackBar.open('Usuario o contraseña incorrecta', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
+            this.snackbar.open('Usuario o contraseña incorrecta', 'Aceptar',
+              { duration: 5000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
             this.router.navigate(['/login']);
       }, () => {
       }

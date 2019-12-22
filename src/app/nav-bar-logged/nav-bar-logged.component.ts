@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
+import { TokenService } from '../shared/services/token.service';
 
 @Component({
   selector: 'app-nav-bar-logged',
@@ -14,7 +15,8 @@ export class NavBarLoggedComponent implements OnInit {
   usernameLogged;
   usernameNiceName;
 
-  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private router: Router, private dialog: MatDialog,
+              private snackbar: MatSnackBar, private token: TokenService) { }
 
   ngOnInit() {
     this.obtainUserLogged();
@@ -30,7 +32,7 @@ export class NavBarLoggedComponent implements OnInit {
 
   deleteAccount() {
     const url = 'http://fenw.etsisi.upm.es:10000/users/' + this.usernameLogged;
-    const tokenKey = localStorage.getItem('token_key');
+    const tokenKey = this.token.getToken();
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', 'Bearer ' + tokenKey);
@@ -38,7 +40,8 @@ export class NavBarLoggedComponent implements OnInit {
         response => {
           switch (response.status) {
             case 204:
-              this.snackBar.open('Usuario eliminado correctamente', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
+              this.snackbar.open('Usuario eliminado correctamente', 'Cerrar',
+                { duration: 5000, verticalPosition: 'top', panelClass: ['success-snackbar'] });
               this.logout();
               break;
             default:
@@ -47,10 +50,12 @@ export class NavBarLoggedComponent implements OnInit {
         }).catch( (error) => {
         switch (error.status) {
           case 401:
-            this.snackBar.open('No estás autorizado para eliminar este usuario', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
+            this.snackbar.open('No estás autorizado para eliminar este usuario', 'Cerrar',
+              { duration: 5000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
             break;
           case 500:
-            this.snackBar.open('Error interno', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
+            this.snackbar.open('Error interno', 'Cerrar',
+              { duration: 5000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
             break;
           default:
             break;
@@ -70,7 +75,7 @@ export class NavBarLoggedComponent implements OnInit {
   }
 
   obtainUserLogged() {
-    const decoded = JSON.parse(window.atob(window.localStorage.getItem('token_key').split('.')[1]));
+    const decoded = JSON.parse(atob(this.token.getToken().split('.')[1]));
     this.usernameLogged = decoded !== undefined ? decoded.username : '';
     this.usernameNiceName = decoded !== undefined ? 'Mi cuenta: ' + decoded.username : '';
   }
