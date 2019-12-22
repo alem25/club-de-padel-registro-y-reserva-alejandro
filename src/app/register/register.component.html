@@ -9,7 +9,7 @@
           <div class="form-group">
             <label class="text-light col-10 pl-0" for="nombre">Usuario:</label>
             <input class="form-control col-10" id="nombre" name="nombre" placeholder="Nombre de usuario" type="text"
-                   required (input)='nombre = nombreval.value' (blur)="CheckIfExists()" ngModel #nombreval='ngModel' minlength='3' >
+                   required (input)='nombre = nombreval.value' (keyup)="CheckIfExists()" ngModel #nombreval='ngModel' minlength='3' >
             <div class="my-1 py-1 alert-danger col-10" *ngIf="nombreval.touched && !nombreval.valid">
               <div *ngIf="nombreval.errors.required">Nombre requerido</div>
               <div *ngIf="nombreval.errors.minlength">Longitud debe ser mayor o igual a {{ nombreval.errors.minlength.requiredLength }} caracteres</div>

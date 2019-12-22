@@ -3,12 +3,12 @@
     <div class="container bg-dark rounded-lg">
       <div class="m-5 p-5">
         <h2 class="text-light">NUEVA RESERVA</h2>
-          <div class="d-inline float-left">
+          <div class="d-inline float-lg-left">
             <label class="text-light d-block" for="date">Selecciona el día de la reserva</label>
-            <input class="form-control d-block my-3 col-md-6" id="date" name="date" min="{{min | date: 'yyyy-MM-dd'}}"
+            <input class="form-control d-block my-3" id="date" name="date" min="{{min | date: 'yyyy-MM-dd'}}"
                    max="{{max | date: 'yyyy-MM-dd'}}" type="date" [(ngModel)]="date" (change)="getAvailableByDay()" ngModel>
           </div>
-          <button class="nav-link btn btn-secondary float-right" routerLink="book">MIS RESERVAS</button>
+          <button class="nav-link btn btn-secondary float-lg-right my-3" routerLink="../book">MIS RESERVAS</button>
         <table *ngIf="date !== undefined && date !== null && date !== ''" class="table table-secondary table-responsive-sm">
           <thead>
           <tr>

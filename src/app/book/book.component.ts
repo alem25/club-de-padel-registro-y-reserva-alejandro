@@ -26,7 +26,7 @@ export class BookComponent implements OnInit {
 
   getReservations() {
     const url = 'http://fenw.etsisi.upm.es:10000/reservations';
-    const tokenKey = localStorage.getItem('token_key');
+    const tokenKey = this.token.getToken();
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', 'Bearer ' + tokenKey);
@@ -107,6 +107,50 @@ export class BookComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.cancelReservation(id);
+      }
+    });
+  }
+
+  cancelAllReservations() {
+    const url = 'http://fenw.etsisi.upm.es:10000/reservations';
+    const tokenKey = this.token.getToken();
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', 'Bearer ' + tokenKey);
+    return this.http.delete(url, { headers, observe: 'response'}).toPromise().then(
+      response => {
+        switch (response.status) {
+          case 204:
+            this.snackbar.open('Todas tus reservas han sido eliminadas correctamente', 'Cerrar',
+              { duration: 5000, verticalPosition: 'top', panelClass: ['success-snackbar'] });
+            this.ngOnInit();
+            break;
+          default:
+            break;
+        }
+      }).catch( (error) => {
+      switch (error.status) {
+        case 401:
+          this.snackbar.open('No estás autorizado para eliminar esta reserva', 'Cerrar',
+            { duration: 5000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
+          break;
+        case 500:
+          this.snackbar.open('Error interno', 'Cerrar',
+            { duration: 5000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
+  openDeleteAllDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, { data: ''
+    });
+    dialogRef.componentInstance.action = 'eliminar todas tus reservas';
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.cancelAllReservations();
       }
     });
   }
