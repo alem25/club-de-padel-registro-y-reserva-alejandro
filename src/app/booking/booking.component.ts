@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Reservation } from '../shared/model/reservation';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Time } from '../shared/model/time';
-import {DialogComponent} from '../dialog/dialog.component';
+import { DialogComponent } from '../dialog/dialog.component';
+import { TokenService } from '../shared/services/token.service';
 
 @Component({
   selector: 'app-booking',
@@ -21,9 +22,11 @@ export class BookingComponent implements OnInit {
   bookcourtid: string;
   bookrsvtime: string;
 
-  constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar, private dialog: MatDialog) { }
+  constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar,
+              private dialog: MatDialog, private token: TokenService) { }
 
   ngOnInit() {
+    this.token.guardian();
     this.min = new Date();
     this.max = new Date();
     this.max.setFullYear(this.max.getFullYear() + 1);
@@ -41,7 +44,8 @@ export class BookingComponent implements OnInit {
           }
         });
       })).catch( () => {
-        this.snackbar.open('Error interno', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
+        this.snackbar.open('Error interno', 'Cerrar',
+          { duration: 5000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
       }
     );
   }
@@ -51,7 +55,7 @@ export class BookingComponent implements OnInit {
       const stringDate = this.date ? this.date.split(' ')[0] : undefined;
       const date = stringDate ? new Date(stringDate).getTime() : undefined;
       const url = 'http://fenw.etsisi.upm.es:10000/reservations/' + date;
-      const tokenKey = localStorage.getItem('token_key');
+      const tokenKey = this.token.getToken();
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
         .set('Authorization', 'Bearer ' + tokenKey);
@@ -60,7 +64,7 @@ export class BookingComponent implements OnInit {
           switch (response.status) {
             case 200:
               const jwt = response.headers.get('Authorization');
-              localStorage.setItem('token_key', jwt.replace('Bearer ', ''));
+              this.token.storeToken(jwt);
               this.reservations = response.body;
               break;
             default:
@@ -69,13 +73,13 @@ export class BookingComponent implements OnInit {
         }).catch( (error) => {
         switch (error.status) {
           case 401:
-            this.snackbar.open('No estás autorizado para hacer esta solicitud', 'Aceptar',
-              { duration: 5000, verticalPosition: 'top' });
+            this.snackbar.open('No estás autorizado para hacer esta solicitud', 'Cerrar',
+              { duration: 5000, verticalPosition: 'top', panelClass: '[danger-snackbar]' });
             this.router.navigate(['/start']);
             break;
           case 500:
-            this.snackbar.open('Error interno. Por favor, inténtalo de nuevo más tarde', 'Aceptar',
-              { duration: 5000, verticalPosition: 'top' });
+            this.snackbar.open('Error interno. Por favor, inténtalo de nuevo más tarde', 'Cerrar',
+              { duration: 5000, verticalPosition: 'top', panelClass: '[danger-snackbar]' });
             this.router.navigate(['/start']);
             break;
           default:
@@ -133,39 +137,41 @@ export class BookingComponent implements OnInit {
         courtid: +this.bookcourtid,
         rsvdatetime: +date,
       };
-      return this.http.post(url, body, { headers, observe: 'response' })
-        .toPromise().then(
-        (response: any) => {
+      return this.http.post(url, body, { headers, observe: 'response', responseType: 'json' })
+        .subscribe(
+        response => {
           switch (response.status) {
+            case 200:
             case 201:
+            case 204:
               const jwt = response.headers.get('Authorization');
-              localStorage.setItem('token_key', jwt.replace('Bearer ', ''));
-              this.snackbar.open('¡Plaza reservada!', 'Aceptar',
-                { duration: 5000, verticalPosition: 'top' });
+              this.token.storeToken(jwt);
               this.router.navigate(['/book']);
+              this.snackbar.open('¡Plaza reservada!', 'Aceptar',
+                { duration: 5000, verticalPosition: 'top', panelClass: ['success-snackbar'] });
               break;
             default:
               break;
           }
-        }).catch( (error) => {
+        }, error => {
         switch (error.status) {
           case 400:
-            this.snackbar.open('La pista o la fecha de la reserva no son válidas', 'Aceptar',
-              { duration: 5000, verticalPosition: 'top' });
+            this.snackbar.open('La pista o la fecha de la reserva no son válidas', 'Cerrar',
+              { duration: 5000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
             break;
           case 401:
-            this.snackbar.open('No estás autorizado para hacer esta solicitud', 'Aceptar',
-              { duration: 5000, verticalPosition: 'top' });
-            this.router.navigate(['/start']);
+            this.snackbar.open('No estás autorizado para hacer esta solicitud', 'Cerrar',
+              { duration: 5000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
+            this.router.navigate(['/']);
             break;
           case 409:
-            this.snackbar.open('Haz alcanzado el límite máximo de reservas', 'Aceptar',
-              { duration: 5000, verticalPosition: 'top' });
+            this.snackbar.open('Haz alcanzado el límite máximo de reservas', 'Cerrar',
+              { duration: 5000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
             break;
           case 500:
-            this.snackbar.open('Error interno. Por favor, inténtalo de nuevo más tarde', 'Aceptar',
-              { duration: 5000, verticalPosition: 'top' });
-            this.router.navigate(['/start']);
+            this.snackbar.open('Error interno. Por favor, inténtalo de nuevo más tarde', 'Cerrar',
+              { duration: 5000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
+            this.router.navigate(['/']);
             break;
           default:
             break;

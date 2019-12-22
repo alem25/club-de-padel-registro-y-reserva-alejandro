@@ -1,7 +1,3 @@
-html {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 #start {
   background-image: url('../../assets/images/court.jpg');
   background-repeat: no-repeat;
@@ -14,10 +10,25 @@ html {
 }
 
 p, h1, h2, h3, h4, h5, h6 {
-  color: white;
   text-shadow: 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
 }
 
 p {
   font-size: 22px;
+}
+
+::ng-deep .success-snackbar {
+  background-color: #28a745 !important;
+  font-weight: bold !important;
+  color: #f8f9fa !important;
+}
+
+::ng-deep .danger-snackbar {
+  background-color: #dc3545 !important;
+  font-weight: bold !important;
+  color: #f8f9fa !important;
+}
+
+::ng-deep .mat-button {
+  color: #f8f9fa !important;
 }

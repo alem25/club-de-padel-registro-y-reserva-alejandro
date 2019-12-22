@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'nav-bar', component: NavigationBarComponent },
   { path: 'nav-bar-logged', component: NavBarLoggedComponent },
   { path: 'booking', component: BookingComponent },
-  { path: '', redirectTo: 'start', pathMatch: 'full'}
+  { path: '', redirectTo: '/', pathMatch: 'full'}
 ];
 
 @NgModule({

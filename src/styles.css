@@ -1,4 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  color: white;
+}
+
+::ng-deep .success-snackbar {
+  background-color: #28a745 !important;
+  font-weight: bold !important;
+  color: #f8f9fa !important;
+}
+
+::ng-deep .danger-snackbar {
+  background-color: #dc3545 !important;
+  font-weight: bold !important;
+  color: #f8f9fa !important;
+}
+
+::ng-deep .mat-button {
+  color: #f8f9fa !important;
+}

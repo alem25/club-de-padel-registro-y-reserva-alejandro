@@ -1,6 +1,6 @@
 <section>
-  <app-navigation-bar *ngIf="!isAuthorized()"></app-navigation-bar>
-  <app-nav-bar-logged *ngIf="isAuthorized()"></app-nav-bar-logged>
+  <app-navigation-bar *ngIf="!token.isAuthorized()"></app-navigation-bar>
+  <app-nav-bar-logged *ngIf="token.isAuthorized()"></app-nav-bar-logged>
   <router-outlet></router-outlet>
   <app-footer></app-footer>
   <app-cookies></app-cookies>

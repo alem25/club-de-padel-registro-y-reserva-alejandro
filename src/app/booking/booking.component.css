@@ -4,3 +4,19 @@
   background-size: cover;
   mix-blend-mode: multiply;
 }
+
+::ng-deep .success-snackbar {
+  background-color: #28a745 !important;
+  font-weight: bold !important;
+  color: #f8f9fa !important;
+}
+
+::ng-deep .danger-snackbar {
+  background-color: #dc3545 !important;
+  font-weight: bold !important;
+  color: #f8f9fa !important;
+}
+
+::ng-deep .mat-button {
+  color: #f8f9fa !important;
+}

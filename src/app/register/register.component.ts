@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import {colors} from '@angular/cli/utilities/color';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +28,8 @@ export class RegisterComponent implements OnInit {
           switch (response.status) {
             case 200:
               this.alreadyExists = true;
-              this.snackBar.open('Este nombre de usuario ya existe', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
+              this.snackBar.open('Este nombre de usuario ya existe', 'Cerrar',
+                { duration: 10000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
               break;
             default:
               break;
@@ -36,10 +38,12 @@ export class RegisterComponent implements OnInit {
         switch (error.status) {
           case 404:
             this.alreadyExists = false;
-            this.snackBar.open('Usuario válido', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
+            this.snackBar.open('Usuario válido', 'Cerrar',
+              { duration: 10000, verticalPosition: 'top', panelClass: ['success-snackbar'] });
             break;
           case 500:
-            this.snackBar.open('Error interno', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
+            this.snackBar.open('Error interno', 'Cerrar',
+              { duration: 10000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
             break;
           default:
             break;
@@ -61,8 +65,9 @@ export class RegisterComponent implements OnInit {
       response => {
         switch (response.status) {
           case 201:
-            this.snackBar.open('Usuario registrado correctamente', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
-            this.router.navigate(['/']);
+            this.snackBar.open('Usuario registrado correctamente. Por favor, ingresa al sistema', 'Cerrar',
+              { duration: 10000, verticalPosition: 'top', panelClass: ['success-snackbar'] });
+            this.router.navigate(['/login']);
             break;
           default:
             break;
@@ -70,13 +75,16 @@ export class RegisterComponent implements OnInit {
       }).catch( (error) => {
         switch (error.status) {
           case 400:
-            this.snackBar.open('Usuario, contraseña o email requerido', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
+            this.snackBar.open('Usuario, contraseña o email requerido', 'Cerrar',
+              { duration: 10000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
             break;
           case 409:
-            this.snackBar.open('Usuario repetido', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
+            this.snackBar.open('Usuario repetido', 'Cerrar',
+              { duration: 10000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
             break;
           case 500:
-            this.snackBar.open('Error interno', 'Aceptar', { duration: 5000, verticalPosition: 'top' });
+            this.snackBar.open('Error interno', 'Cerrar',
+              { duration: 10000, verticalPosition: 'top', panelClass: ['danger-snackbar'] });
             break;
           default:
             break;

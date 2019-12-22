@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TokenService } from './shared/services/token.service';
 
 @Component({
   selector: 'app-root',
@@ -8,20 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'club-de-padel-registro-y-reserva-alejandro';
 
-  ngOnInit() {
+  constructor(private token: TokenService) {
   }
 
-  isAuthorized() {
-    try {
-      const token = window.localStorage.getItem('token_key');
-      const base64Url = token.split('.')[1];
-      const decodedValue = JSON.parse(window.atob(base64Url));
-      const expDate = decodedValue.exp;
-      const today = Date.now();
-      return today < expDate * 1000;
-    } catch (e) {
-      return false;
-    }
+  ngOnInit() {
   }
 }
 

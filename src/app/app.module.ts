@@ -24,6 +24,7 @@ import { StartComponent } from './start/start.component';
 import { NavBarLoggedComponent } from './nav-bar-logged/nav-bar-logged.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { BookingComponent } from './booking/booking.component';
+import { TokenService } from './shared/services/token.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,7 @@ import { BookingComponent } from './booking/booking.component';
   entryComponents: [
     DialogComponent
   ],
-  providers: [],
+  providers: [TokenService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
