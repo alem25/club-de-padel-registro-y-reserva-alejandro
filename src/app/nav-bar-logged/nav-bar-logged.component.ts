@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { DialogComponent } from '../dialog/dialog.component';
 import { TokenService } from '../shared/services/token.service';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-nav-bar-logged',
@@ -17,6 +18,7 @@ export class NavBarLoggedComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router, private dialog: MatDialog,
               private snackbar: MatSnackBar, private token: TokenService) { }
+  private url: string = environment.url + 'users';
 
   ngOnInit() {
     this.obtainUserLogged();
@@ -31,7 +33,7 @@ export class NavBarLoggedComponent implements OnInit {
   }
 
   deleteAccount() {
-    const url = 'http://fenw.etsisi.upm.es:10000/users/' + this.usernameLogged;
+    const url = this.url + '/' + this.usernameLogged;
     const tokenKey = this.token.getToken();
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')

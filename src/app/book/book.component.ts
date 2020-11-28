@@ -6,6 +6,7 @@ import { Reservation } from '../shared/model/reservation';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TokenService } from '../shared/services/token.service';
 import { DialogComponent } from '../dialog/dialog.component';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-book',
@@ -18,19 +19,18 @@ export class BookComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar,
               private token: TokenService, private dialog: MatDialog) { }
-
+  private url: string = environment.url + 'reservations';
   ngOnInit() {
     this.token.guardian();
     this.getReservations();
   }
 
   getReservations() {
-    const url = 'http://fenw.etsisi.upm.es:10000/reservations';
     const tokenKey = this.token.getToken();
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', 'Bearer ' + tokenKey);
-    return this.http.get(url, { headers, observe: 'response', responseType: 'json'}).toPromise().then(
+    return this.http.get(this.url, { headers, observe: 'response', responseType: 'json'}).toPromise().then(
       (response: any) => {
         switch (response.status) {
           case 200:
@@ -64,7 +64,7 @@ export class BookComponent implements OnInit {
   }
 
   cancelReservation(rsvId: number) {
-    const url = 'http://fenw.etsisi.upm.es:10000/reservations/' + rsvId;
+    const url = this.url + '/' + rsvId;
     const tokenKey = this.token.getToken();
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
@@ -112,12 +112,11 @@ export class BookComponent implements OnInit {
   }
 
   cancelAllReservations() {
-    const url = 'http://fenw.etsisi.upm.es:10000/reservations';
     const tokenKey = this.token.getToken();
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', 'Bearer ' + tokenKey);
-    return this.http.delete(url, { headers, observe: 'response'}).toPromise().then(
+    return this.http.delete(this.url, { headers, observe: 'response'}).toPromise().then(
       response => {
         switch (response.status) {
           case 204:

@@ -6,6 +6,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { Time } from '../shared/model/time';
 import { DialogComponent } from '../dialog/dialog.component';
 import { TokenService } from '../shared/services/token.service';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-booking',
@@ -24,6 +25,7 @@ export class BookingComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar,
               private dialog: MatDialog, private token: TokenService) { }
+  private url: string = environment.url + 'reservations';
 
   ngOnInit() {
     this.token.guardian();
@@ -54,7 +56,7 @@ export class BookingComponent implements OnInit {
     if (this.date !== undefined && this.date !== null && this.date !== '') {
       const stringDate = this.date ? this.date.split(' ')[0] : undefined;
       const date = stringDate ? new Date(stringDate).getTime() : undefined;
-      const url = 'http://fenw.etsisi.upm.es:10000/reservations/' + date;
+      const url = this.url + '/' + date;
       const tokenKey = this.token.getToken();
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
@@ -128,7 +130,6 @@ export class BookingComponent implements OnInit {
       let stringDate = this.date ? this.date.split(' ')[0] : undefined;
       stringDate = stringDate + ' ' + this.bookrsvtime;
       const date: number | undefined = stringDate ? new Date(stringDate).getTime() : undefined;
-      const url = 'http://fenw.etsisi.upm.es:10000/reservations';
       const tokenKey = localStorage.getItem('token_key');
       const headers = new HttpHeaders()
         .set('Content-Type', 'application/json')
@@ -137,7 +138,7 @@ export class BookingComponent implements OnInit {
         courtid: +this.bookcourtid,
         rsvdatetime: +date,
       };
-      return this.http.post(url, body, { headers, observe: 'response', responseType: 'json' })
+      return this.http.post(this.url, body, { headers, observe: 'response', responseType: 'json' })
         .subscribe(
         response => {
           switch (response.status) {

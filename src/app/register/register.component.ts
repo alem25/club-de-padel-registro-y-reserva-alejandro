@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import {colors} from '@angular/cli/utilities/color';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(private http: HttpClient, private snackBar: MatSnackBar, private router: Router) { }
 
+  private url: string = environment.url + 'users';
   public nombre;
   public email1;
   public clave1;
@@ -22,7 +24,7 @@ export class RegisterComponent implements OnInit {
 
   CheckIfExists() {
     if (this.nombre !== null && this.nombre.length > 2) {
-      const urlCheck = 'http://fenw.etsisi.upm.es:10000/users/' + this.nombre;
+      const urlCheck = this.url + '/' + this.nombre;
       return this.http.get(urlCheck, { observe: 'response'}).toPromise().then(
         response => {
           switch (response.status) {
@@ -53,7 +55,6 @@ export class RegisterComponent implements OnInit {
   }
 
   Register() {
-    const url = 'http://fenw.etsisi.upm.es:10000/users';
     const date = this.fecha !== undefined ? new Date(this.fecha).getTime() : undefined;
     const body = {
       username: this.nombre,
@@ -61,7 +62,7 @@ export class RegisterComponent implements OnInit {
       password: this.clave1,
       birthdate: date !== undefined ? date : undefined,
     };
-    return this.http.post(url, body, { observe: 'response'}).toPromise().then(
+    return this.http.post(this.url, body, { observe: 'response'}).toPromise().then(
       response => {
         switch (response.status) {
           case 201:

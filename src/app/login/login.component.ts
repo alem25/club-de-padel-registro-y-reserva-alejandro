@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { TokenService } from '../shared/services/token.service';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +16,10 @@ export class LoginComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router, private snackbar: MatSnackBar,
               private token: TokenService) { }
+  private url: string = environment.url + 'users';
 
   Login(user, password) {
-    const url = 'http://fenw.etsisi.upm.es:10000/users/login?username=' + user + '&password=' + password;
+    const url = this.url + '/login?username=' + user + '&password=' + password;
     return this.http.get( url, {observe: 'response'}).subscribe(
       response => {
         this.jwt = response.headers.get('Authorization');
