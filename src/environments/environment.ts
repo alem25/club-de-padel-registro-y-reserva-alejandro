@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'http://fenw.etsisi.upm.es:10000/'
+  url: 'https://localhost:44338/api/'
 };
 
 /*

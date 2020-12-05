@@ -60,6 +60,7 @@ export class RegisterComponent implements OnInit {
       username: this.nombre,
       email: this.email1,
       password: this.clave1,
+      phone: this.phone,
       birthdate: date !== undefined ? date : undefined,
     };
     return this.http.post(this.url, body, { observe: 'response'}).toPromise().then(

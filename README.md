@@ -1,27 +1,17 @@
-# ProcesoDeRegistroYReservaAlejandro
+# ClubDePadelRegistroyReserva
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.20.
+Este proyecto es una Web App desarrollada en Angular CLI y para funcionar necesita que esté el proyecto llamado ClubDePadelRegistroyReservaApiRest en ejecución.
 
-## Development server
+## Ejecutar el servidor
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Es necesario descargar el comprimido o clonar el proyecto, compilarlo y ejecutarlo con el comando 'ng serve' o 'npm start' en la consola o powershell en la ruta del proyecto descargado. Es necesario tener instalado node.js y algunas otras dependencias del proyecto. Una vez ejecutado el proyecto, accede a la ruta [https://localhost:puerto1] en el navegador web. Por defecto, se abre en el puerto 4200.
 
-## Code scaffolding
+## Conectar esta Web App con la Web Api Rest
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Para utilizar la aplicación web completa, debes descargar y ejecutar ambos proyectos. Luego debes modificar los archivos environment.ts de este proyecto, cambiando el valor del campo URL por la del servidor donde se está ejecutando la API REST. Finalmente, debes ir al Web.config del proyecto API REST y actualizar el campo 'value' de la línea de código 31: [add name="Access-Control-Allow-Origin" value="http://localhost:4200"] con la ruta del servidor y puerto de esta WEB (por defecto el puerto del servidor WEB es 4200, en este caso no será necesario actualizar esta línea).
 
-## Build
+## Más información
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+En el archivo README.md del proyecto ClubDePadelRegistroyReservaApiRest hay instrucciones más detalladas sobre como descargar y ejecutar ese proyecto.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Desarrollado por: [https://github.com/alem25]
